@@ -12,7 +12,7 @@ type Article = {
     createdAt: string;
 };
 
-const ArticlePageDetails = () => {
+const ArticleDetails = () => {
     const { id } = Route.useParams();
     const navigate = useNavigate();
     const [article, setArticle] = useState<Article | null>(null);
@@ -42,4 +42,4 @@ const ArticlePageDetails = () => {
     );
 };
 
-export default ArticlePageDetails;
+export default ArticleDetails;

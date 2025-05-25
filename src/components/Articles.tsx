@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios"; // ✅ make sure you have this file!
-import ArticleCard from "../components/ArticleCard";
+import api from "../api/axios";
+import ArticleCard from "../components/ArticleCard.tsx";
 
 const ARTICLES_PER_PAGE = 12;
 
@@ -10,10 +10,10 @@ export type Article = {
     author: string;
     content: string;
     imageURL: string;
-    createdAt: string; // DateTime as string
+    createdAt: string;
 };
 
-const ArticlesPage: React.FC = () => {
+const Articles: React.FC = () => {
     const [articles, setArticles] = useState<Article[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -85,4 +85,4 @@ const ArticlesPage: React.FC = () => {
     );
 };
 
-export default ArticlesPage;
+export default Articles;
