@@ -11,27 +11,82 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as HomeImport } from './routes/home'
-import { Route as ArticlesIndexImport } from './routes/articles/index'
-import { Route as ArticlesIdImport } from './routes/articles/$id'
+import { Route as TestImport } from './routes/test'
+import { Route as GeneralImport } from './routes/_general'
+import { Route as GeneralIndexImport } from './routes/_general/index'
+import { Route as GeneralHomeImport } from './routes/_general/home'
+import { Route as GeneralArticlesIndexImport } from './routes/_general/articles/index'
+import { Route as AuthAdminIndexImport } from './routes/_auth/admin/index'
+import { Route as GeneralArticlesIdImport } from './routes/_general/articles/$id'
+import { Route as AuthAdminArticlesIndexImport } from './routes/_auth/admin/articles/index'
+import { Route as AuthAdminArticlesCreateImport } from './routes/_auth/admin/articles/create'
+import { Route as AuthAdminArticlesIdIndexImport } from './routes/_auth/admin/articles/$id/index'
+import { Route as AuthAdminArticlesIdEditImport } from './routes/_auth/admin/articles/$id/edit'
 
 // Create/Update Routes
 
-const HomeRoute = HomeImport.update({
+const TestRoute = TestImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GeneralRoute = GeneralImport.update({
+  id: '/_general',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GeneralIndexRoute = GeneralIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GeneralRoute,
+} as any)
+
+const GeneralHomeRoute = GeneralHomeImport.update({
   id: '/home',
   path: '/home',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => GeneralRoute,
 } as any)
 
-const ArticlesIndexRoute = ArticlesIndexImport.update({
+const GeneralArticlesIndexRoute = GeneralArticlesIndexImport.update({
   id: '/articles/',
   path: '/articles/',
+  getParentRoute: () => GeneralRoute,
+} as any)
+
+const AuthAdminIndexRoute = AuthAdminIndexImport.update({
+  id: '/_auth/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const ArticlesIdRoute = ArticlesIdImport.update({
+const GeneralArticlesIdRoute = GeneralArticlesIdImport.update({
   id: '/articles/$id',
   path: '/articles/$id',
+  getParentRoute: () => GeneralRoute,
+} as any)
+
+const AuthAdminArticlesIndexRoute = AuthAdminArticlesIndexImport.update({
+  id: '/_auth/admin/articles/',
+  path: '/admin/articles/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthAdminArticlesCreateRoute = AuthAdminArticlesCreateImport.update({
+  id: '/_auth/admin/articles/create',
+  path: '/admin/articles/create',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthAdminArticlesIdIndexRoute = AuthAdminArticlesIdIndexImport.update({
+  id: '/_auth/admin/articles/$id/',
+  path: '/admin/articles/$id/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthAdminArticlesIdEditRoute = AuthAdminArticlesIdEditImport.update({
+  id: '/_auth/admin/articles/$id/edit',
+  path: '/admin/articles/$id/edit',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,25 +94,81 @@ const ArticlesIdRoute = ArticlesIdImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/home': {
-      id: '/home'
+    '/_general': {
+      id: '/_general'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GeneralImport
+      parentRoute: typeof rootRoute
+    }
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestImport
+      parentRoute: typeof rootRoute
+    }
+    '/_general/home': {
+      id: '/_general/home'
       path: '/home'
       fullPath: '/home'
-      preLoaderRoute: typeof HomeImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof GeneralHomeImport
+      parentRoute: typeof GeneralImport
     }
-    '/articles/$id': {
-      id: '/articles/$id'
+    '/_general/': {
+      id: '/_general/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof GeneralIndexImport
+      parentRoute: typeof GeneralImport
+    }
+    '/_general/articles/$id': {
+      id: '/_general/articles/$id'
       path: '/articles/$id'
       fullPath: '/articles/$id'
-      preLoaderRoute: typeof ArticlesIdImport
+      preLoaderRoute: typeof GeneralArticlesIdImport
+      parentRoute: typeof GeneralImport
+    }
+    '/_auth/admin/': {
+      id: '/_auth/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthAdminIndexImport
       parentRoute: typeof rootRoute
     }
-    '/articles/': {
-      id: '/articles/'
+    '/_general/articles/': {
+      id: '/_general/articles/'
       path: '/articles'
       fullPath: '/articles'
-      preLoaderRoute: typeof ArticlesIndexImport
+      preLoaderRoute: typeof GeneralArticlesIndexImport
+      parentRoute: typeof GeneralImport
+    }
+    '/_auth/admin/articles/create': {
+      id: '/_auth/admin/articles/create'
+      path: '/admin/articles/create'
+      fullPath: '/admin/articles/create'
+      preLoaderRoute: typeof AuthAdminArticlesCreateImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/admin/articles/': {
+      id: '/_auth/admin/articles/'
+      path: '/admin/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AuthAdminArticlesIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/admin/articles/$id/edit': {
+      id: '/_auth/admin/articles/$id/edit'
+      path: '/admin/articles/$id/edit'
+      fullPath: '/admin/articles/$id/edit'
+      preLoaderRoute: typeof AuthAdminArticlesIdEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/admin/articles/$id/': {
+      id: '/_auth/admin/articles/$id/'
+      path: '/admin/articles/$id'
+      fullPath: '/admin/articles/$id'
+      preLoaderRoute: typeof AuthAdminArticlesIdIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -65,44 +176,125 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface GeneralRouteChildren {
+  GeneralHomeRoute: typeof GeneralHomeRoute
+  GeneralIndexRoute: typeof GeneralIndexRoute
+  GeneralArticlesIdRoute: typeof GeneralArticlesIdRoute
+  GeneralArticlesIndexRoute: typeof GeneralArticlesIndexRoute
+}
+
+const GeneralRouteChildren: GeneralRouteChildren = {
+  GeneralHomeRoute: GeneralHomeRoute,
+  GeneralIndexRoute: GeneralIndexRoute,
+  GeneralArticlesIdRoute: GeneralArticlesIdRoute,
+  GeneralArticlesIndexRoute: GeneralArticlesIndexRoute,
+}
+
+const GeneralRouteWithChildren =
+  GeneralRoute._addFileChildren(GeneralRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/home': typeof HomeRoute
-  '/articles/$id': typeof ArticlesIdRoute
-  '/articles': typeof ArticlesIndexRoute
+  '': typeof GeneralRouteWithChildren
+  '/test': typeof TestRoute
+  '/home': typeof GeneralHomeRoute
+  '/': typeof GeneralIndexRoute
+  '/articles/$id': typeof GeneralArticlesIdRoute
+  '/admin': typeof AuthAdminIndexRoute
+  '/articles': typeof GeneralArticlesIndexRoute
+  '/admin/articles/create': typeof AuthAdminArticlesCreateRoute
+  '/admin/articles': typeof AuthAdminArticlesIndexRoute
+  '/admin/articles/$id/edit': typeof AuthAdminArticlesIdEditRoute
+  '/admin/articles/$id': typeof AuthAdminArticlesIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/home': typeof HomeRoute
-  '/articles/$id': typeof ArticlesIdRoute
-  '/articles': typeof ArticlesIndexRoute
+  '/test': typeof TestRoute
+  '/home': typeof GeneralHomeRoute
+  '/': typeof GeneralIndexRoute
+  '/articles/$id': typeof GeneralArticlesIdRoute
+  '/admin': typeof AuthAdminIndexRoute
+  '/articles': typeof GeneralArticlesIndexRoute
+  '/admin/articles/create': typeof AuthAdminArticlesCreateRoute
+  '/admin/articles': typeof AuthAdminArticlesIndexRoute
+  '/admin/articles/$id/edit': typeof AuthAdminArticlesIdEditRoute
+  '/admin/articles/$id': typeof AuthAdminArticlesIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/home': typeof HomeRoute
-  '/articles/$id': typeof ArticlesIdRoute
-  '/articles/': typeof ArticlesIndexRoute
+  '/_general': typeof GeneralRouteWithChildren
+  '/test': typeof TestRoute
+  '/_general/home': typeof GeneralHomeRoute
+  '/_general/': typeof GeneralIndexRoute
+  '/_general/articles/$id': typeof GeneralArticlesIdRoute
+  '/_auth/admin/': typeof AuthAdminIndexRoute
+  '/_general/articles/': typeof GeneralArticlesIndexRoute
+  '/_auth/admin/articles/create': typeof AuthAdminArticlesCreateRoute
+  '/_auth/admin/articles/': typeof AuthAdminArticlesIndexRoute
+  '/_auth/admin/articles/$id/edit': typeof AuthAdminArticlesIdEditRoute
+  '/_auth/admin/articles/$id/': typeof AuthAdminArticlesIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/home' | '/articles/$id' | '/articles'
+  fullPaths:
+    | ''
+    | '/test'
+    | '/home'
+    | '/'
+    | '/articles/$id'
+    | '/admin'
+    | '/articles'
+    | '/admin/articles/create'
+    | '/admin/articles'
+    | '/admin/articles/$id/edit'
+    | '/admin/articles/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/home' | '/articles/$id' | '/articles'
-  id: '__root__' | '/home' | '/articles/$id' | '/articles/'
+  to:
+    | '/test'
+    | '/home'
+    | '/'
+    | '/articles/$id'
+    | '/admin'
+    | '/articles'
+    | '/admin/articles/create'
+    | '/admin/articles'
+    | '/admin/articles/$id/edit'
+    | '/admin/articles/$id'
+  id:
+    | '__root__'
+    | '/_general'
+    | '/test'
+    | '/_general/home'
+    | '/_general/'
+    | '/_general/articles/$id'
+    | '/_auth/admin/'
+    | '/_general/articles/'
+    | '/_auth/admin/articles/create'
+    | '/_auth/admin/articles/'
+    | '/_auth/admin/articles/$id/edit'
+    | '/_auth/admin/articles/$id/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  HomeRoute: typeof HomeRoute
-  ArticlesIdRoute: typeof ArticlesIdRoute
-  ArticlesIndexRoute: typeof ArticlesIndexRoute
+  GeneralRoute: typeof GeneralRouteWithChildren
+  TestRoute: typeof TestRoute
+  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
+  AuthAdminArticlesCreateRoute: typeof AuthAdminArticlesCreateRoute
+  AuthAdminArticlesIndexRoute: typeof AuthAdminArticlesIndexRoute
+  AuthAdminArticlesIdEditRoute: typeof AuthAdminArticlesIdEditRoute
+  AuthAdminArticlesIdIndexRoute: typeof AuthAdminArticlesIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  HomeRoute: HomeRoute,
-  ArticlesIdRoute: ArticlesIdRoute,
-  ArticlesIndexRoute: ArticlesIndexRoute,
+  GeneralRoute: GeneralRouteWithChildren,
+  TestRoute: TestRoute,
+  AuthAdminIndexRoute: AuthAdminIndexRoute,
+  AuthAdminArticlesCreateRoute: AuthAdminArticlesCreateRoute,
+  AuthAdminArticlesIndexRoute: AuthAdminArticlesIndexRoute,
+  AuthAdminArticlesIdEditRoute: AuthAdminArticlesIdEditRoute,
+  AuthAdminArticlesIdIndexRoute: AuthAdminArticlesIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -115,19 +307,57 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/home",
-        "/articles/$id",
-        "/articles/"
+        "/_general",
+        "/test",
+        "/_auth/admin/",
+        "/_auth/admin/articles/create",
+        "/_auth/admin/articles/",
+        "/_auth/admin/articles/$id/edit",
+        "/_auth/admin/articles/$id/"
       ]
     },
-    "/home": {
-      "filePath": "home.tsx"
+    "/_general": {
+      "filePath": "_general.tsx",
+      "children": [
+        "/_general/home",
+        "/_general/",
+        "/_general/articles/$id",
+        "/_general/articles/"
+      ]
     },
-    "/articles/$id": {
-      "filePath": "articles/$id.tsx"
+    "/test": {
+      "filePath": "test.tsx"
     },
-    "/articles/": {
-      "filePath": "articles/index.tsx"
+    "/_general/home": {
+      "filePath": "_general/home.tsx",
+      "parent": "/_general"
+    },
+    "/_general/": {
+      "filePath": "_general/index.tsx",
+      "parent": "/_general"
+    },
+    "/_general/articles/$id": {
+      "filePath": "_general/articles/$id.tsx",
+      "parent": "/_general"
+    },
+    "/_auth/admin/": {
+      "filePath": "_auth/admin/index.tsx"
+    },
+    "/_general/articles/": {
+      "filePath": "_general/articles/index.tsx",
+      "parent": "/_general"
+    },
+    "/_auth/admin/articles/create": {
+      "filePath": "_auth/admin/articles/create.tsx"
+    },
+    "/_auth/admin/articles/": {
+      "filePath": "_auth/admin/articles/index.tsx"
+    },
+    "/_auth/admin/articles/$id/edit": {
+      "filePath": "_auth/admin/articles/$id/edit.tsx"
+    },
+    "/_auth/admin/articles/$id/": {
+      "filePath": "_auth/admin/articles/$id/index.tsx"
     }
   }
 }

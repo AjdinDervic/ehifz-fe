@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link as RouterLink } from "@tanstack/react-router";
 import { Link } from 'react-scroll';
 
-// Main Home Component
+
 const Home = () => {
 
 
@@ -113,6 +113,6 @@ const Home = () => {
 export default Home;
 
 // Route Definition - After Component Declaration
-export const Route = createFileRoute("/home")({
+export const Route = createFileRoute("/_general/home")({
   component: Home,
 });

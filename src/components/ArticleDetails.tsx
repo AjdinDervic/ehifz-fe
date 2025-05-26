@@ -1,4 +1,4 @@
-import { Route } from '../routes/articles/$id';
+import { Route } from '../routes/_general/articles/$id';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
