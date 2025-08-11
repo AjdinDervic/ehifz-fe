@@ -16,4 +16,8 @@ npm run dev
 ```
 
 Frontend will be available at:
-http://localhost:5173
+http://localhost:5173  
+
+The **Backend** is located in a separate repository:  
+👉 [Backend Repository](https://github.com/AjdinDervic/HifzApp)
+
